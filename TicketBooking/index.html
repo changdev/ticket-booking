@@ -11,11 +11,22 @@
 </head>
     <body>
         <table>
-            <tbody data-bind="foreach: seats">
-                <tr data-bind="foreach: $data">
-                    <td data-bind="text: formatedText($data.index)"></td>
+            <thead>
+                <tr>
+                    <td>Name</td><td>Seat</td><td>Price</td>
                 </tr>
+            </thead>
+            <tbody data-bind="foreach: bookedSeats">
+                <td><input data-bind="value: name"/></td>
+                <td><select data-bind="options: $root.availableSeats, optionsText: 'index',
+                                       value: seat"></select></td>
+                <td data-bind="text: formattedPrice"></td>
+                <td><button data-bind="click: $root.removeSeat">Remove</button></td>
             </tbody>
+            <tfoot>
+                <td></td><td></td><td data-bind="visible: $root.totalPrice() != 0, text: $root.totalPrice"></td>
+            </tfoot>
         </table>
+        <button data-bind="click: addSeat">Book more seats    </button>
     </body>
 </html>
