@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Ticket Booking Example</title>
+    <script type="text/javascript" src="Scripts/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="Scripts/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="Scripts/ticketBookingViewModel.js"></script>
+    <link rel="stylesheet" type="text/css" href="Style/Site.css"/>
+</head>
+    <body>
+        <table>
+            <tbody data-bind="foreach: seats">
+                <tr data-bind="foreach: $data">
+                    <td data-bind="text: formatedText($data.index)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
