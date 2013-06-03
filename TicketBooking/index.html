@@ -1,32 +1,61 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Ticket Booking Example</title>
-    <script type="text/javascript" src="Scripts/jquery-2.0.0.min.js"></script>
-    <script type="text/javascript" src="Scripts/knockout-2.2.1.js"></script>
-    <script type="text/javascript" src="Scripts/ticketBookingViewModel.js"></script>
-    <link rel="stylesheet" type="text/css" href="Style/Site.css"/>
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <title>Ticket Booking Example</title>
+        <link rel="stylesheet" type="text/css" href="Content/bootstrap.min.css"/>
+    </head>
     <body>
-        <table>
-            <thead>
-                <tr>
-                    <td>Name</td><td>Seat</td><td>Price</td>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: bookedSeats">
-                <td><input data-bind="value: name"/></td>
-                <td><select data-bind="options: $root.availableSeats, optionsText: 'index',
-                                       value: seat"></select></td>
-                <td data-bind="text: formattedPrice"></td>
-                <td><button data-bind="click: $root.removeSeat">Remove</button></td>
-            </tbody>
-            <tfoot>
-                <td></td><td></td><td data-bind="visible: $root.totalPrice() != 0, text: $root.totalPrice"></td>
-            </tfoot>
-        </table>
-        <button data-bind="click: addSeat">Book more seats    </button>
+        <div class="container" style="padding: 30px">
+            <div class="row">
+                <div class="span10">
+                    <div class="well">
+                        <strong>Available funds: </strong>
+                        <div class="input-prepend">
+                            <span class="add-on">$</span>
+                            <input type="text" data-bind="value: totalFunds"/>
+                        </div>
+                    </div>
+                    <div class="alert" data-bind="fadeWaring: bookedSeats().length == 0">
+                        <button class="close" data-dismiss="alert" type="button">&times;</button>
+                        <h4>You did not book any seat</h4>
+                        If you don't book a seat it might will be busy! <br/>
+                        <button type="button" class="btn btn-warning btn-small"  style="margin-top: 10px"data-bind="click: addSeat">Book a seat</button>
+                    </div>
+                    <table class="table table-bordered table-striped" data-bind="visible: bookedSeats().length > 0">
+                        <thead>
+                            <tr>
+                                <th>Name</th><th>Seat</th><th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: bookedSeats">
+                            <tr>
+                                <td><input type="text" class="input-block-level" data-bind="value: name"/></td>
+                                <td><select class="input-block-level" data-bind="options: $root.availableSeats,
+                                                    optionsText: 'index',
+                                                   value: seat"></select></td>
+                                <td data-bind="text: formattedPrice"></td>
+                                <td><button class="btn btn-block btn-warning" data-bind="click: $root.removeSeat">Remove</button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot data-bind ="visible: totalPrice() != 0">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td data-bind="text: totalPrice"></td>
+                                <td data-bind="glow: availableFunds() < 0">Funds left: $<span data-bind="    text: availableFunds"></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <button class="btn" data-bind="click: addSeat, enable: availableFunds() > 0">Book more seats</button>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="Scripts/jquery-2.0.0.min.js"></script>
+        <script type="text/javascript" src="Scripts/knockout-2.2.1.js"></script>
+        <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+        <script type="text/javascript" src="Scripts/ticketBookingViewModel.js"></script>
     </body>
 </html>
